@@ -74,13 +74,25 @@
                         <form method="POST" >
                             {% csrf_token %}
                             {{form|crispy|linebreaks}}
-                            <select multiple style="width:25%;">
+                            <select multiple style="width:25%;" id="select">
                                 <option value="" disabled selected>type A</option>
-                                <option value="hurr">1</option>
-                                <option value="hurr">D2urr</option>
-                                <option value="hurr">Du3rr</option>
-                                <option value="hurr">Dur4r</option>
-                                </select>
+                                <option id="lolodile" value="hurr">1</option>
+                                <option value="D2hurr">D2urr</option>
+                                <option value="D3hurr">Du3rr</option>
+                                <option value="D4hurr">Dur4r</option>
+                            </select> 
+                            <div class="" id="checkbox-wala-div">
+                                <div>
+                                    <label for="checkbox-1">hehe</label>
+                                    <input id="checkbox-1" type="checkbox" name="hehe" />
+                                </div>
+                                
+                                <div>
+                                    <label for="checkbox-1">hehe</label>
+                                    <input id="checkbox-1" type="checkbox" name="hehe" />
+                                </div>
+                            
+                            </div>
                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                 <input type="Submit" class="btn btn-primary" value="Submit">                                         
                             </div>
@@ -100,6 +112,14 @@
                         class="form-control" placeholder="additional details" value=""></div>
             </div>
         </div> -->
+        <script>
+            var checkboxDiv = document.getElementById("lolodile");
+            var select = document.getElementById("select")
+            
+            select.addEventListener("change", function (e) {
+                console.log(e.target.value)
+            })
+        </script>
     </div>
 </div>
 {% endblock %}
