@@ -43,7 +43,7 @@
       <form
         class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
       >
-        <div class="input-group">
+        {% comment %} <div class="input-group">
           <input
             class="form-control"
             type="text"
@@ -54,7 +54,7 @@
           <button class="btn btn-primary" id="btnNavbarSearch" type="button">
             <i class="fas fa-search"></i>
           </button>
-        </div>
+        </div> {% endcomment %}
       </form>
       <!-- Navbar-->
       <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -74,7 +74,7 @@
           >
             <li>
               <a class="dropdown-item" href="{% url 'customer:query' %}"
-                >Settings</a
+                >Add Query</a
               >
             </li>
             {% comment %} <li>
@@ -144,11 +144,11 @@
                   </a>
                 </div>
               </nav> {% endcomment %}
-              <div class="sb-sidenav-menu-heading">Addons</div>
+              {% comment %} <div class="sb-sidenav-menu-heading">Addons</div>
               <a class="nav-link" href="tables.html">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Tables
-              </a>
+              </a> {% endcomment %}
             </div>
           </div>
           <div class="sb-sidenav-footer">
@@ -165,68 +165,7 @@
             <ol class="breadcrumb mb-4">
               <li class="breadcrumb-item active">Dashboard</li>
             </ol>
-            <div class="row">
-              <div class="col-xl-3 col-md-6">
-                <div class="card bg-primary text-white mb-4">
-                  <div class="card-body">Primary Card</div>
-                  <div
-                    class="card-footer d-flex align-items-center justify-content-between"
-                  >
-                    <a class="small text-white stretched-link" href="#"
-                      >View Details</a
-                    >
-                    <div class="small text-white">
-                      <i class="fas fa-angle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-6">
-                <div class="card bg-warning text-white mb-4">
-                  <div class="card-body">Warning Card</div>
-                  <div
-                    class="card-footer d-flex align-items-center justify-content-between"
-                  >
-                    <a class="small text-white stretched-link" href="#"
-                      >View Details</a
-                    >
-                    <div class="small text-white">
-                      <i class="fas fa-angle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-6">
-                <div class="card bg-success text-white mb-4">
-                  <div class="card-body">Success Card</div>
-                  <div
-                    class="card-footer d-flex align-items-center justify-content-between"
-                  >
-                    <a class="small text-white stretched-link" href="#"
-                      >View Details</a
-                    >
-                    <div class="small text-white">
-                      <i class="fas fa-angle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-6">
-                <div class="card bg-danger text-white mb-4">
-                  <div class="card-body">Danger Card</div>
-                  <div
-                    class="card-footer d-flex align-items-center justify-content-between"
-                  >
-                    <a class="small text-white stretched-link" href="#"
-                      >View Details</a
-                    >
-                    <div class="small text-white">
-                      <i class="fas fa-angle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
             <div class="card mb-4">
               <div class="card-header">
                 <i class="fas fa-table me-1"></i>
@@ -236,32 +175,26 @@
                 <table id="datatablesSimple">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Position</th>
-                      <th>Office</th>
-                      <th>Age</th>
-                      <th>Start date</th>
-                      <th>Salary</th>
+                      <th>Testing</th>
+                      <th>Testing</th>
+                      <th>Testing</th>
+                      <th>Testing</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>Name</th>
-                      <th>Position</th>
-                      <th>Office</th>
-                      <th>Age</th>
-                      <th>Start date</th>
-                      <th>Salary</th>
+                      <th>Testing</th>
+                      <th>Testing</th>
+                      <th>Testing</th>
+                      <th>Testing</th>
                     </tr>
                   </tfoot>
                   <tbody>
                     <tr>
-                      <td>Tiger Nixon</td>
-                      <td>System Architect</td>
-                      <td>Edinburgh</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
-                      <td>$320,800</td>
+                      <td>Harshit</td>
+                      <td>customer</td>
+                      <td>test</td>
+                      <td>test</td>
                     </tr>
                   </tbody>
                 </table>
