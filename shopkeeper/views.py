@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import shop_settings, shopkeeper_name, shopkeeperForm
 from .models import Shopkeeper
+from customer.models import Customer
 
 
 ########### Home/Index Page #########################################
@@ -16,7 +17,14 @@ from .models import Shopkeeper
 def index(request):
     if not user_check(request):
         return render(request,'shopkeeper/401.html',status=401)
-    return render(request, 'shopkeeper/index.html')
+    customer_list=Customer.objects.all() 
+    ls=[]
+    print(request.user.shopkeeper.id)
+    for customer in customer_list:
+        temp = str(customer.bit)
+        if temp[int(request.user.shopkeeper.id)-1]=='1':
+            ls.append(customer)   
+    return render(request, 'shopkeeper/index.html',{'Customer_list':ls})
 
 ############ Profile Page ##################################
 
