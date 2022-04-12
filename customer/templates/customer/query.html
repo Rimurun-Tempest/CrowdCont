@@ -45,13 +45,6 @@
                             Preferred Time-3 : {{user.customer.prefftime3}}
                             {% endif %}  
                             <br><br>
-
-
-
-                            {% comment %} Current Preferred Time-1 : {%if user.customer.prefftime1==Null %}{{user.customer.prefftime1}}<br>
-                            Current Preferred Time-2 : {{user.customer.prefftime2}}<br>
-                            Current Preferred Time-3 : {{user.customer.prefftime3}}<br> {% endcomment %}
-                            {% comment %} check this line {% endcomment %}
                         </div>                                                                       
                     </div>
                 </div>      
@@ -59,67 +52,27 @@
         </div>
         <div class="card col-md-6 border-right">
             <div class="p-3 py-5">
-                {% comment %} <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right"> Settings</h4>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-5"><label class="labels">Name</label><input type="text" class="form-control"
-                            placeholder="first name" value=""></div>
-                    <div class="col-md-5"><label class="labels">Surname</label><input type="text" class="form-control"
-                            value="" placeholder="surname"></div>
-                </div> {% endcomment %}
                 <div class="row mt-5">
                     <h4 class="text-right" >Customer Settings</h4>
                     <div class="card-body">
-                        <form method="POST" >
+                        <form method="POST" action="{% url 'customer:query' %}">
                             {% csrf_token %}
-                            {{form|crispy|linebreaks}}
-                            <select multiple style="width:25%;" id="select">
-                                <option value="" disabled selected>type A</option>
-                                <option id="lolodile" value="hurr">1</option>
-                                <option value="D2hurr">D2urr</option>
-                                <option value="D3hurr">Du3rr</option>
-                                <option value="D4hurr">Dur4r</option>
-                            </select> 
-                            <div class="" id="checkbox-wala-div">
-                                <div>
-                                    <label for="checkbox-1">hehe</label>
-                                    <input id="checkbox-1" type="checkbox" name="hehe" />
-                                </div>
-                                
-                                <div>
-                                    <label for="checkbox-1">hehe</label>
-                                    <input id="checkbox-1" type="checkbox" name="hehe" />
-                                </div>
-                            
+                            {{form | crispy | linebreaks}}
+                            <div class="mb-3">
+                                <label>Interested Shops</label>
+                                {% for shop in Shop_list %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name={{shop.id}}>
+                                        <label class="form-check-label" for="flexCheckDefault">{{shop.shop_name}}</label>
+                                    </div>
+                                {% endfor %}
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <input type="Submit" class="btn btn-primary" value="Submit">                                         
-                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>   
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Edit
-                        Experience</span><span class="border px-3 p-1 add-experience"><i
-                            class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text"
-                        class="form-control" placeholder="experience" value=""></div> <br>
-                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text"
-                        class="form-control" placeholder="additional details" value=""></div>
-            </div>
-        </div> -->
-        <script>
-            var checkboxDiv = document.getElementById("lolodile");
-            var select = document.getElementById("select")
-            
-            select.addEventListener("change", function (e) {
-                console.log(e.target.value)
-            })
-        </script>
     </div>
 </div>
 {% endblock %}

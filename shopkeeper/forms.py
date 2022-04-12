@@ -26,3 +26,8 @@ class shop_settings(forms.ModelForm):
     class Meta():
         model=Shopkeeper
         fields=['shop_name','type','capacity','opening_time','closing_time','shop_bio']    
+
+class shopkeeper_name(forms.ModelForm):
+    class Meta():
+        model=User
+        fields=['first_name','last_name']

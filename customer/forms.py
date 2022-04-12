@@ -38,3 +38,4 @@ class customer_settings(forms.ModelForm):
     class Meta():
         model=Customer
         fields=['prefftime1','prefftime2','prefftime3']    
+        

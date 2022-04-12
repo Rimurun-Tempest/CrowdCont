@@ -8,14 +8,24 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomerForm,customer_settings
 from .models import Customer
 from shopkeeper.models import Shopkeeper
+from django.utils.datastructures import MultiValueDictKeyError
 ########### Home Page #########################################
 
 
 @login_required(login_url='login/')
 def index(request):
+    Shop_list=Shopkeeper.objects.all()
     if not user_check(request):
-        return render(request,'shopkeeper/401.html',status=401)      
-    return render(request, 'customer/index.html')
+        return render(request,'shopkeeper/401.html',status=401)
+    ls=[]      
+    temp=str(request.user.customer.bit)
+    print(temp)
+    # print(temp[0])
+    for shop in Shop_list:
+        if temp[int(shop.id)-1]=='1':
+            ls.append(shop)
+    print(ls)
+    return render(request, 'customer/index.html',{'Shop_list':ls})
 
 ############ Profile Page ##################################
 
@@ -33,15 +43,24 @@ def query(request):
     Shop_list=Shopkeeper.objects.all()
     if not user_check(request):
         return render(request,'shopkeeper/401.html',status=401)      
-    profile = request.user.customer
     if request.method == 'POST':
-        form = customer_settings(request.POST, instance=profile)
+        form=customer_settings(request.POST,instance=request.user.customer)
+        s = ""
+        for shop in Shop_list:
+            temp=str(shop.id)
+            try:
+                request.POST[temp]
+                s += '1'
+
+            except MultiValueDictKeyError:
+                s += '0'        
+        print(s)
         if form.is_valid:
             form.save()
+            Customer.objects.all().filter(user=request.user).update(bit=s)
     else:
-        form = customer_settings(instance=profile)
-    return render(request, 'customer/query.html', {'form': form})
-
+        form=customer_settings(instance=request.user.customer)          
+    return render(request, 'customer/query.html', {'form':form,'Shop_list':Shop_list})
 
 ########### Register Page #####################################
 
@@ -72,7 +91,7 @@ def login(request):
         password = request.POST.get('password')
         temp_user = authenticate(request, username=username, password=password)
 
-        if temp_user is not None:
+        if temp_user is not None and hasattr(temp_user,'customer'):
             form = auth_login(request, temp_user)
             messages.success(request, f' welcome {username} !!')
             return redirect('customer:customer')
@@ -80,7 +99,6 @@ def login(request):
             messages.info(request, f'Account Does Not Exist Please Register')
     form = AuthenticationForm()
     return render(request, 'customer/login.html', {'form': form})
-
 
 
 ################ Logout ##############################

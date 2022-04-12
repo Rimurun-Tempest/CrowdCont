@@ -1,43 +1,53 @@
 {% extends 'shopkeeper/index.html' %}
 {% block content%}
 {% load crispy_forms_tags %}
+{% load static %}
+<link href="{% static 'shopkeeper/css/style.css' %}" rel="stylesheet" type="text/css" />
 <div class="container rounded bg-white mt-5 mb-5" >
     <div class="row">
         <div class="card col-md-4 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                    width="150px"
-                    src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
-                    class="font-weight-bold">{{user.shopkeeper.shop_name}}</span><span class="text-black-50"></span><span>
+                width="150px"
+                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+                class="font-weight-bold">{{user.shopkeeper.shop_name}}</span><span class="text-black-50"></span><span>
                 </span></div>
                 <div class="card col-md-20 border-right">
                     <div class="p-3 py-6">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Shop Bio</h4>
                         </div>
-                        <div>
+                        <div style="padding-bottom: 5%;">
                             Shop: {{user.shopkeeper.shop_name}}
-                        </div>                                                                       
+                        </div>    
+                        <div style="padding-bottom: 5%;">
+                            Shopkeeper: {{user.first_name}} {{user.last_name}}
+                        </div>
+                        <div style="padding-bottom: 5%;">
+                            Capacity: {{user.shopkeeper.capacity}}
+                        </div>                                    
+                        <div style="padding-bottom: 5%;">
+                            Opening Time: {{user.shopkeeper.opening_time}}
+                        </div>                                          
+                        <div style="padding-bottom: 5%;">
+                            Closing Time: {{user.shopkeeper.closing_time}}
+                        </div>
+                        <div style="padding-bottom: 5%;">
+                            About Shop: {{user.shopkeeper.shop_bio}}
+                        </div>                                                                                                                                           
                     </div>
                 </div>      
-
-        </div>
-        <div class="card col-md-6 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">ShopKeeper Settings</h4>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-5"><label class="labels">Name</label><input type="text" class="form-control"
-                            placeholder="first name" value=""></div>
-                    <div class="col-md-5"><label class="labels">Surname</label><input type="text" class="form-control"
-                            value="" placeholder="surname"></div>
-                </div>
-                <div class="row mt-5">
-                    <h4 class="text-right" >Shop Settings</h4>
-                    <div class="card-body">
-                        <form method="POST" >
+                
+            </div>
+            <div class="card col border-right">
+                <div class="p-3 py-5">
+                    <div class="row mt-5">
+                        <h4 class="text-right" >Shop Settings</h4>
+                        <div class="card-body">
+                            <form method="POST" >
                             {% csrf_token %}
-                            {{form|crispy|linebreaks}}
+                            {{form_name|crispy}}  
+                            <br>                  
+                            {{form|crispy}}
                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                 <input type="Submit" class="btn btn-primary" value="Submit">                                         
                             </div>
@@ -46,17 +56,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Edit
-                        Experience</span><span class="border px-3 p-1 add-experience"><i
-                            class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text"
-                        class="form-control" placeholder="experience" value=""></div> <br>
-                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text"
-                        class="form-control" placeholder="additional details" value=""></div>
-            </div>
-        </div> -->
     </div>
 </div>
 {% endblock %}

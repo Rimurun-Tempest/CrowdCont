@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate,logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import shop_settings, shopkeeperForm
+from .forms import shop_settings, shopkeeper_name, shopkeeperForm
 from .models import Shopkeeper
 
 
@@ -35,11 +35,13 @@ def settings(request):
     profile=request.user.shopkeeper
     if request.method == 'POST':
         form = shop_settings(request.POST,instance=profile)
-        if form.is_valid:
-            form.save()
+        form_name=shopkeeper_name(request.POST,instance=request.user)
+        if form.is_valid and form_name.is_valid is not None:
+            form.save() and form_name.save()
     else:
         form=shop_settings(instance=profile)
-    return render(request, 'shopkeeper/settings.html',{'form':form})
+        form_name=shopkeeper_name(instance=request.user)
+    return render(request, 'shopkeeper/settings.html',{'form':form,'form_name':form_name})
 
 
 ########### Register Page #####################################
@@ -70,7 +72,7 @@ def login(request):
         password = request.POST.get('password')
         temp_user = authenticate(request, username=username, password=password)
         
-        if temp_user is not None:
+        if temp_user is not None and hasattr(temp_user,'shopkeeper'):
             form = auth_login(request,temp_user)
             messages.success(request, f' welcome {username} !!')
             return redirect('shopkeeper:shopkeeper')

@@ -175,27 +175,29 @@
                 <table id="datatablesSimple">
                   <thead>
                     <tr>
-                      <th>Testing</th>
-                      <th>Testing</th>
-                      <th>Testing</th>
-                      <th>Testing</th>
+                      <th>Shop</th>
+                      <th>Opening Time</th>
+                      <th>Closing Time</th>
+                      <th>Capacity</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>Testing</th>
-                      <th>Testing</th>
-                      <th>Testing</th>
-                      <th>Testing</th>
+                      <th>Shop</th>
+                      <th>Opening Time</th>
+                      <th>Closing Time</th>
+                      <th>Capacity</th>
                     </tr>
                   </tfoot>
                   <tbody>
-                    <tr>
-                      <td>Harshit</td>
-                      <td>customer</td>
-                      <td>test</td>
-                      <td>test</td>
-                    </tr>
+                   {% for shop in Shop_list %}
+                        <tr>
+                        <td>{{shop.shop_name}}</td>
+                        <td>{{shop.opening_time}}</td>
+                        <td>{{shop.closing_time}}</td>
+                        <td>{{shop.capacity}}</td>
+                        </tr>
+                    {% endfor %} 
                   </tbody>
                 </table>
               </div>
