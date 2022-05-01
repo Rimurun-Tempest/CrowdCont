@@ -13,11 +13,6 @@ SHOP_CHOICES = (
     ('B','B'),
     ('C','C')
 )
-# class shopkeeperAddForm(forms.ModelForm):
-#     type=forms.CharField(widget=forms.Select(choices=SHOP_CHOICES))
-#     class Meta():
-#         model=Shopkeeper
-#         fields=['type']
 
 class shop_settings(forms.ModelForm):
     type=forms.CharField(widget=forms.Select(choices=SHOP_CHOICES))
@@ -30,4 +25,4 @@ class shop_settings(forms.ModelForm):
 class shopkeeper_name(forms.ModelForm):
     class Meta():
         model=User
-        fields=['first_name','last_name']
+        fields=['first_name','last_name','email']

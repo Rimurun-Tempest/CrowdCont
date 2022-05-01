@@ -1,0 +1,23 @@
+{% extends 'owner/index.html' %}
+{% load crispy_forms_tags %}
+{% block content%}
+<div class="card-body">
+    <h4 class="text-right" >Shop Settings</h4>
+    <div class="card-body">
+        <form method="POST" action="{% url 'owner:shops' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label>Shops</label>
+                <select name="select_shop" class="form-control">
+                    <option value="" selected>Please select a Shop</option>
+                    {% for shop in Shop_list %}
+                    <option value="{{ shop.id }}">{{ shop.shop_name }}</option>
+                    {% endfor %}
+                </select>
+                {{form|crispy}}
+            </div>
+                <button type="submit" class="btn btn-primary">Submit</button>   
+        </form>
+    </div>
+</div>
+{% endblock %}

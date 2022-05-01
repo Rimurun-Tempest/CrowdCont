@@ -4,26 +4,38 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomerForm,customer_settings
+from    django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomerForm, customer_name,customer_settings
 from .models import Customer
 from shopkeeper.models import Shopkeeper
 from django.utils.datastructures import MultiValueDictKeyError
-########### Home Page #########################################
 
+
+
+########### Home Page #########################################
 
 @login_required(login_url='login/')
 def index(request):
+    print(request.user.customer.id)
     Shop_list=Shopkeeper.objects.all()
     if not user_check(request):
         return render(request,'shopkeeper/401.html',status=401)
     ls=[]      
     temp=str(request.user.customer.bit)
-    print(temp)
-    # print(temp[0])
+    # print(temp)
     for shop in Shop_list:
-        if temp[int(shop.id)-1]=='1':
-            ls.append(shop)
+    #     print(shop.shop_name + " " +  str(shop.id))
+        # if len(temp)>=int(shop.id)-1 and temp[int(shop.id)-1]=='1':
+        #     ls.append(shop)
+        if temp[int(shop.id)-1]==IndexError:
+            continue
+        else:
+            if temp[int(shop.id)-1]=='1':
+                ls.append(shop)
+        # try:
+        #     temp[int(shop.id)-1]=='1'   
+        # except IndexError:
+        #     continue               
     print(ls)
     return render(request, 'customer/index.html',{'Shop_list':ls})
 
@@ -43,8 +55,10 @@ def query(request):
     Shop_list=Shopkeeper.objects.all()
     if not user_check(request):
         return render(request,'shopkeeper/401.html',status=401)      
+    profile=request.user.customer
     if request.method == 'POST':
-        form=customer_settings(request.POST,instance=request.user.customer)
+        form=customer_settings(request.POST,instance=profile)
+        form_name=customer_name(request.POST,instance=request.user)
         s = ""
         for shop in Shop_list:
             temp=str(shop.id)
@@ -54,13 +68,29 @@ def query(request):
 
             except MultiValueDictKeyError:
                 s += '0'        
-        print(s)
-        if form.is_valid:
-            form.save()
-            Customer.objects.all().filter(user=request.user).update(bit=s)
+        # print(s)
+        if form.is_valid and form_name.is_valid is not None:
+            form.save() and form_name.save()
+            Customer.objects.all().filter(user=request.user).update(bit=s,approved=False,alloted_time=-1)
     else:
-        form=customer_settings(instance=request.user.customer)          
-    return render(request, 'customer/query.html', {'form':form,'Shop_list':Shop_list})
+        form=customer_settings(instance=profile)
+        form_name=customer_name(instance=request.user)          
+    return render(request, 'customer/query.html', {'form_name':form_name,'form':form,'Shop_list':Shop_list})
+###############################################################
+# def settings(request):
+#     if not user_check(request):
+#         return render(request,'shopkeeper/401.html',status=401)  
+#     profile=request.user.shopkeeper
+#     if request.method == 'POST':
+#         form = shop_settings(request.POST,instance=profile)
+#         form_name=shopkeeper_name(request.POST,instance=request.user)
+#         if form.is_valid and form_name.is_valid is not None:
+#             form.save() and form_name.save()
+#     else:
+#         form=shop_settings(instance=profile)
+#         form_name=shopkeeper_name(instance=request.user)
+#     return render(request, 'shopkeeper/settings.html',{'form':form,'form_name':form_name})
+
 
 ########### Register Page #####################################
 
@@ -82,6 +112,25 @@ def register(request):
     else:
         form = CustomerForm()
     return render(request, 'customer/register.html', {'form': form})
+
+################ Shops Page ###################################
+def interested_shops(request):
+    Shop_list=Shopkeeper.objects.all()
+    if not user_check(request):
+        return render(request,'shopkeeper/401.html',status=401)      
+    if request.method == 'POST':
+        s = ""
+        for shop in Shop_list:
+            temp=str(shop.id)
+            try:
+                request.POST[temp]
+                s += '1'
+
+            except MultiValueDictKeyError:
+                s += '0'        
+        # print(s)
+        Customer.objects.all().filter(user=request.user).update(bit=s)         
+    return render(request, 'customer/shops.html', {'Shop_list':Shop_list})    
 
 ################ Login Page ###################################
 

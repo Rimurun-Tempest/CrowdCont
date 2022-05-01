@@ -20,12 +20,6 @@ ls=list()
 for shops in Shopkeeper.objects.all():
     ls.append((shops.shop_name,shops.shop_name))
 ls=tuple(ls)
-# class shopkeeperAddForm(forms.ModelForm):
-#     type=forms.CharField(widget=forms.Select(choices=SHOP_CHOICES))
-#     class Meta():
-#         model=Shopkeeper
-#         fields=['type']
-
 
 # check this function
 class customer_settings(forms.ModelForm):
@@ -39,3 +33,7 @@ class customer_settings(forms.ModelForm):
         model=Customer
         fields=['prefftime1','prefftime2','prefftime3']    
         
+class customer_name(forms.ModelForm):
+    class Meta():
+        model=User
+        fields=['first_name','last_name','email']

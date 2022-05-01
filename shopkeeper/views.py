@@ -22,8 +22,11 @@ def index(request):
     print(request.user.shopkeeper.id)
     for customer in customer_list:
         temp = str(customer.bit)
-        if temp[int(request.user.shopkeeper.id)-1]=='1':
-            ls.append(customer)   
+        try:
+            temp[int(request.user.shopkeeper.id)-1]=='1'
+            ls.append(customer)
+        except IndexError:
+            continue   
     return render(request, 'shopkeeper/index.html',{'Customer_list':ls})
 
 ############ Profile Page ##################################

@@ -1,0 +1,38 @@
+{% extends 'customer/index.html' %}
+{% block content%}
+{% load crispy_forms_tags %}
+<div class="container rounded bg-white mt-5 mb-5" >
+    <div class="row">
+            <div class="p-0 py-2">
+                <div class="row mt-5">
+                    <h4 class="text-right" >Customer Settings</h4>
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'customer:shops' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                {% for shop in Shop_list %}
+                                <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{shop}}" aria-expanded="true" aria-controls="{{shop}}">
+                                            {{shop}}
+                                        </button>
+                                        </h2>
+                                        <div id="{{shop.shop_name}}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name={{shop.id}}>
+                                                    <label class="form-check-label" for="flexCheckDefault">{{shop.shop_name}}</label>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                {% endfor %}                                
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>   
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

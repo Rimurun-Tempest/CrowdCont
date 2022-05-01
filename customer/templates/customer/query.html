@@ -57,15 +57,33 @@
                     <div class="card-body">
                         <form method="POST" action="{% url 'customer:query' %}">
                             {% csrf_token %}
+                            {{form_name | crispy |linebreaks}}
                             {{form | crispy | linebreaks}}
                             <div class="mb-3">
-                                <label>Interested Shops</label>
-                                {% for shop in Shop_list %}
+                                {% comment %} <label>Interested Shops</label> {% endcomment %}
+                                {% comment %} {% for shop in Shop_list %}
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name={{shop.id}}>
                                         <label class="form-check-label" for="flexCheckDefault">{{shop.shop_name}}</label>
                                     </div>
-                                {% endfor %}
+                                {% endfor %} {% endcomment %}
+                                {% comment %} {% for shop in Shop_list %}
+                                <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{shop}}" aria-expanded="true" aria-controls="{{shop}}">
+                                    {{shop}}
+                                  </button>
+                                </h2>
+                                <div id="{{shop.shop_name}}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                  <div class="accordion-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name={{shop.id}}>
+                                        <label class="form-check-label" for="flexCheckDefault">{{shop.shop_name}}</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        {% endfor %}                                 {% endcomment %}
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>   
                         </form>
