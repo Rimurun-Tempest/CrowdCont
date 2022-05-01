@@ -62,8 +62,11 @@
           >
             <li>
               <a class="dropdown-item" href="{% url 'customer:query' %}"
-                >Add Query</a
+                >Settings</a
               >
+              <a class="dropdown-item" href="{% url 'customer:shops' %}"
+                >Shops</a
+              >              
             </li>
             {% comment %} <li>
               <a class="dropdown-item" href="{% url 'customer:profile' %}"
@@ -105,7 +108,7 @@
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-book-open"></i>
                 </div>
-                Query
+                Settings
                 <div class="sb-sidenav-collapse-arrow">
                   <i class="fas fa-angle-down"></i>
                 </div>

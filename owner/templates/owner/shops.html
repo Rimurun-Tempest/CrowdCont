@@ -1,7 +1,7 @@
 {% extends 'owner/index.html' %}
 {% load crispy_forms_tags %}
 {% block content%}
-<div class="card-body">
+<div class="card-body" style="border-style: solid; margin-bottom: 100%; margin-left:20px; margin-right:20px; margin-top:20px;; border-radius: 15px">
     <h4 class="text-right" >Shop Settings</h4>
     <div class="card-body">
         <form method="POST" action="{% url 'owner:shops' %}">
