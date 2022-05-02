@@ -48,10 +48,13 @@ def index(request):
         iterate=0
         for i in Customer_list:
             time=data[iterate]
-            # mailer(request,i.user.email,i,time)
+            if len(time)==1:
+                time='0'+time+':00 hours'
+            else:
+                time=time+':00 hours'
+            mailer(request,i.user.email,i,time)
             Customer.objects.filter(id=i.id).update(approved=True,alloted_time=time)    
             iterate+=1
-        # print(proc)
     return render(request,'owner/index.html',{'Customer_list':Customer_list})
 
 
@@ -102,9 +105,9 @@ def userLogout(request):
 
 ################ Email ################################
 
-# def mailer(request,to_mail,name,alloted_time):
-#     server =smtplib.SMTP('smtp.gmail.com',587)
-#     server.starttls()
-#     server.login(request.user.email,'')
-#     text=f'Hello {name}, You have been alloted the time {alloted_time}. \n Kindly arrive at the Shopping Mall at your alloted time. \n Happy Shopping'
-#     server.sendmail(request.user.email,to_mail,text)
+def mailer(request,to_mail,name,alloted_time):
+    server =smtplib.SMTP('smtp.gmail.com',587)
+    server.starttls()
+    server.login(request.user.email,'LdWKenPch77jT8U')
+    text=f'Hello {name}, You have been alloted the time {alloted_time}. \nKindly arrive at the Shopping Mall at your alloted time. \n\nHappy Shopping'
+    server.sendmail(request.user.email,to_mail,text)

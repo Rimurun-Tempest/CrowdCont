@@ -10,7 +10,7 @@ class Customer(models.Model):
     prefftime2 = models.TimeField(null=True)
     prefftime3 = models.TimeField(null=True)
     bit = models.CharField(max_length=10,null=True)
-    alloted_time=models.IntegerField(default=0,editable=True)
+    alloted_time=models.CharField(max_length=10,editable=True)
     approved= models.BooleanField(default=False,editable=True)
     def __str__(self):
         return self.user.first_name

@@ -27,15 +27,19 @@ def index(request):
     #     print(shop.shop_name + " " +  str(shop.id))
         # if len(temp)>=int(shop.id)-1 and temp[int(shop.id)-1]=='1':
         #     ls.append(shop)
-        if temp[int(shop.id)-1]==IndexError:
+        # if temp[int(shop.id)-1]==IndexError:
+        #     continue
+        # else:
+        #     if temp[int(shop.id)-1]=='1':
+        #         ls.append(shop)
+        try:
+            temp[int(shop.id)-1]=='1'   
+        except IndexError:
             continue
         else:
-            if temp[int(shop.id)-1]=='1':
+            if(temp[int(shop.id-1)]=='1'):
                 ls.append(shop)
-        # try:
-        #     temp[int(shop.id)-1]=='1'   
-        # except IndexError:
-        #     continue               
+
     print(ls)
     return render(request, 'customer/index.html',{'Shop_list':ls})
 
@@ -76,22 +80,6 @@ def query(request):
         form=customer_settings(instance=profile)
         form_name=customer_name(instance=request.user)          
     return render(request, 'customer/query.html', {'form_name':form_name,'form':form,'Shop_list':Shop_list})
-###############################################################
-# def settings(request):
-#     if not user_check(request):
-#         return render(request,'shopkeeper/401.html',status=401)  
-#     profile=request.user.shopkeeper
-#     if request.method == 'POST':
-#         form = shop_settings(request.POST,instance=profile)
-#         form_name=shopkeeper_name(request.POST,instance=request.user)
-#         if form.is_valid and form_name.is_valid is not None:
-#             form.save() and form_name.save()
-#     else:
-#         form=shop_settings(instance=profile)
-#         form_name=shopkeeper_name(instance=request.user)
-#     return render(request, 'shopkeeper/settings.html',{'form':form,'form_name':form_name})
-
-
 ########### Register Page #####################################
 
 def register(request):

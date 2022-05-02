@@ -26,10 +26,10 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                    {% comment %} <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li> {% endcomment %}
                     <!-- <li class="nav-item"><a class="nav-link" href="#!">About</a></li> -->
-                    {% comment %} <li class="nav-item"><a class="nav-link" href="#Contact">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#features">Services</a></li> {% endcomment %}
+                    {% comment %} <li class="nav-item"><a class="nav-link" href="#Contact">Contact</a></li>{% endcomment %}
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/Rimurun-Tempest/CrowdCont">Github</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'shopkeeper:shopkeeper' %}">Shopkeeper</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'customer:customer' %}">Customer</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'owner:owner' %}">Owner</a></li>
