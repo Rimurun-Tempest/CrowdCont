@@ -62,20 +62,10 @@ def query(request):
     profile=request.user.customer
     if request.method == 'POST':
         form=customer_settings(request.POST,instance=profile)
-        form_name=customer_name(request.POST,instance=request.user)
-        s = ""
-        for shop in Shop_list:
-            temp=str(shop.id)
-            try:
-                request.POST[temp]
-                s += '1'
-
-            except MultiValueDictKeyError:
-                s += '0'        
+        form_name=customer_name(request.POST,instance=request.user)    
         # print(s)
         if form.is_valid and form_name.is_valid is not None:
             form.save() and form_name.save()
-            Customer.objects.all().filter(user=request.user).update(bit=s,approved=False,alloted_time=-1)
     else:
         form=customer_settings(instance=profile)
         form_name=customer_name(instance=request.user)          
@@ -102,6 +92,7 @@ def register(request):
     return render(request, 'customer/register.html', {'form': form})
 
 ################ Shops Page ###################################
+
 def interested_shops(request):
     Shop_list=Shopkeeper.objects.all()
     if not user_check(request):
@@ -117,7 +108,7 @@ def interested_shops(request):
             except MultiValueDictKeyError:
                 s += '0'        
         # print(s)
-        Customer.objects.all().filter(user=request.user).update(bit=s)         
+        Customer.objects.all().filter(user=request.user).update(bit=s,approved=False,alloted_time=-1)         
     return render(request, 'customer/shops.html', {'Shop_list':Shop_list})    
 
 ################ Login Page ###################################

@@ -15,32 +15,33 @@ import smtplib
 
 @login_required(login_url='login/')
 def index(request):
+
     Customer_list=Customer.objects.all()
     Shop_list=Shopkeeper.objects.all()
-    shopkeepers=[]
-    file=open('input.txt','w')
-    file.write(str(len(Shop_list))+'\n')
-    for i in Shop_list:    
-        file.write(str(i.shop_name).replace(' ','.')+'\n')
-        file.write(str(i.capacity)+'\n')
-        file.write(str(i.opening_time).replace(':','')[0:2]+'\n')
-        file.write(str(i.closing_time).replace(':','')[0:2]+'\n')
-    file.write(str(len(Customer_list))+'\n')
-    for i in Customer_list:
-        file.write(str(i.prefftime1).replace(':','')[0:2]+'\n')
-        file.write(str(i.prefftime2).replace(':','')[0:2]+'\n')
-        file.write(str(i.prefftime3).replace(':','')[0:2]+'\n')
-        interest_list=i.bit
-        num=0
-        for x in range(len(interest_list)):
-            if interest_list[x]=='1':
-                num+=1
-        file.write(str(num)+'\n')
-        for x in range(len(interest_list)):
-            if interest_list[x]=='1':
-                file.write(str(Shop_list[x].shop_name).replace(' ','.')+'\n')
-        file.close()
     if request.method=='POST':        
+        file=open('input.txt','w')
+        file.write(str(len(Shop_list))+'\n')
+        for i in Shop_list:    
+            file.write(str(i.shop_name).replace(' ','.')+'\n')
+            file.write(str(i.capacity)+'\n')
+            file.write(str(i.opening_time).replace(':','')[0:2]+'\n')
+            file.write(str(i.closing_time).replace(':','')[0:2]+'\n')
+        file.write(str(len(Customer_list))+'\n')
+
+        for i in Customer_list:
+            file.write(str(i.prefftime1).replace(':','')[0:2]+'\n')
+            file.write(str(i.prefftime2).replace(':','')[0:2]+'\n')
+            file.write(str(i.prefftime3).replace(':','')[0:2]+'\n')
+            interest_list=i.bit
+            num=0
+            for x in range(len(interest_list)):
+                if interest_list[x]=='1':
+                    num+=1
+            file.write(str(num)+'\n')
+            for x in range(len(interest_list)):
+                if interest_list[x]=='1':
+                    file.write(str(Shop_list[x].shop_name).replace(' ','.')+'\n')
+        file.close()
         proc=subprocess.run('./algo.exe',shell=True)
         file=open('output.txt','r')
         data=file.read().split('\n')
@@ -55,6 +56,7 @@ def index(request):
             mailer(request,i.user.email,i,time)
             Customer.objects.filter(id=i.id).update(approved=True,alloted_time=time)    
             iterate+=1
+        return redirect('owner:owner')
     return render(request,'owner/index.html',{'Customer_list':Customer_list})
 
 
