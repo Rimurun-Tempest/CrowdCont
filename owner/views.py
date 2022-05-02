@@ -29,6 +29,10 @@ def index(request):
         file.write(str(len(Customer_list))+'\n')
 
         for i in Customer_list:
+            if i.prefftime1 is None:
+                i.prefftime1=0
+                i.prefftime2=0
+                i.prefftime3=0
             file.write(str(i.prefftime1).replace(':','')[0:2]+'\n')
             file.write(str(i.prefftime2).replace(':','')[0:2]+'\n')
             file.write(str(i.prefftime3).replace(':','')[0:2]+'\n')
@@ -49,12 +53,15 @@ def index(request):
         iterate=0
         for i in Customer_list:
             time=data[iterate]
-            if len(time)==1:
-                time='0'+time+':00 hours'
+            if time != '-1':
+                if len(time)==1 :
+                    time='0'+time+':00 hours'
+                else:
+                    time=time+':00 hours'
+                mailer(request,i.user.email,i,time)
+                Customer.objects.filter(id=i.id).update(approved=True,alloted_time=time)    
             else:
-                time=time+':00 hours'
-            mailer(request,i.user.email,i,time)
-            Customer.objects.filter(id=i.id).update(approved=True,alloted_time=time)    
+                Customer.objects.filter(id=i.id).update(approved=False,alloted_time=time)    
             iterate+=1
         return redirect('owner:owner')
     return render(request,'owner/index.html',{'Customer_list':Customer_list})

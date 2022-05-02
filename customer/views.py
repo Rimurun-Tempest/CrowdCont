@@ -16,10 +16,10 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 @login_required(login_url='login/')
 def index(request):
-    print(request.user.customer.id)
-    Shop_list=Shopkeeper.objects.all()
     if not user_check(request):
         return render(request,'shopkeeper/401.html',status=401)
+    print(request.user.customer.id)
+    Shop_list=Shopkeeper.objects.all()
     ls=[]      
     temp=str(request.user.customer.bit)
     # print(temp)
